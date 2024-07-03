@@ -15,11 +15,11 @@ class AuthService:
         return None
 
     @staticmethod
-    def register(username, password):
+    def register(email, name, username, role, function, password):
         if UserRepository.find_by_username(username):
             return None
         password_hash = generate_password_hash(password)
-        user_id = UserRepository.save(username, password_hash)
+        user_id = UserRepository.save(email, name, username, role, function)
         return {'id': user_id, 'username': username}
 
     @staticmethod

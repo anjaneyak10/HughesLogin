@@ -6,18 +6,32 @@ class UserRepository:
     def find_by_username(username):
         conn = get_db()
         cur = conn.cursor()
-        cur.execute("SELECT id, username, password_hash FROM users WHERE username = %s", (username,))
+        cur.execute("""
+            SELECT *
+            FROM usermaster WHERE username = %s
+        """, (username,)) #
         user = cur.fetchone()
+        print(cur,user)
         cur.close()
         if user:
-            return {'id': user[0], 'username': user[1], 'password_hash': user[2]}
+            return {
+                'email': user[0],
+                'name': user[1],
+                'username': user[2],
+                'role': user[3],
+                'function': user[4],
+
+            }
         return None
 
     @staticmethod
-    def save(username, password_hash):
+    def save(email, name, username, role, function):
         conn = get_db()
         cur = conn.cursor()
-        cur.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s) RETURNING id", (username, password_hash))
+        cur.execute("""
+            INSERT INTO usermaster (email, name, username, role, function) 
+            VALUES (%s, %s, %s, %s, %s ) RETURNING email
+        """, (email, name, username, role, function))
         user_id = cur.fetchone()[0]
         conn.commit()
         cur.close()

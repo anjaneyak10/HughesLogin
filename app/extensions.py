@@ -3,6 +3,7 @@ from flask import g, current_app
 
 def get_db():
     if 'db' not in g:
+        print(current_app.config['DATABASE_URI'])
         g.db = psycopg2.connect(current_app.config['DATABASE_URI'])
     return g.db
 
