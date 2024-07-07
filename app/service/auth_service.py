@@ -40,3 +40,8 @@ class AuthService:
             return {"jwt": jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256'), "user": user}
         except Exception as e:
             return e
+
+    @staticmethod
+    def get_all_users():
+        users = UserRepository.get_all_users()
+        return users

@@ -28,3 +28,11 @@ def register():
     if user:
         return jsonify({'message': 'User created successfully'}), 201
     return jsonify({'message': 'User already exists'}), 400
+
+@auth_bp.route('/getallusers', methods=['GET'])
+@cross_origin()
+def get_all_users():
+    users = AuthService.get_all_users()
+    if users:
+        return jsonify(users), 200
+    return jsonify({'message': 'No users found'}), 404
