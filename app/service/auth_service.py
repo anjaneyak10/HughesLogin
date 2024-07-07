@@ -36,6 +36,7 @@ class AuthService:
                 'function': user['function'],
                 'password_hash': user['password_hash']
             }
-            return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
+            user['password_hash'] = None
+            return {"jwt": jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256'), "user": user}
         except Exception as e:
             return e

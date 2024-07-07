@@ -1,16 +1,18 @@
 from flask import Blueprint, request, jsonify
 from app.service.auth_service import AuthService
+from flask_cors import cross_origin
 
 auth_bp = Blueprint('auth_bp', __name__)
 
 @auth_bp.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    auth_token = AuthService.login(username, password)
-    if auth_token:
-        return jsonify({'token': auth_token}), 200
+    auth_details = AuthService.login(username, password)
+    if auth_details:
+        return jsonify(auth_details), 200
     return jsonify({'message': 'Invalid credentials'}), 401
 
 @auth_bp.route('/register', methods=['POST'])
