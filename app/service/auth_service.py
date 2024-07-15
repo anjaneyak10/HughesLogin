@@ -1,5 +1,7 @@
 from app.repository.user_repository import UserRepository
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
+
 import jwt
 import datetime
 from flask import current_app
