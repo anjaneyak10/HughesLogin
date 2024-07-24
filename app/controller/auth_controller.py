@@ -37,3 +37,11 @@ def get_all_users():
     if users:
         return jsonify(users), 200
     return jsonify({'message': 'No users found'}), 404
+
+@auth_bp.route('/getallusers', methods=['GET'])
+@cross_origin()
+def get_all_users():
+    users = AuthService.get_all_users()
+    if users:
+        return jsonify(users), 200
+    return jsonify({'message': 'No users found'}), 404

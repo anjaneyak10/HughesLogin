@@ -47,3 +47,8 @@ class AuthService:
     def get_all_users():
         users = UserRepository.get_all_users()
         return users
+
+    @staticmethod
+    def get_all_users():
+        users = UserRepository.get_all_users()
+        return users

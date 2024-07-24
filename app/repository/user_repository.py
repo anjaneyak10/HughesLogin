@@ -55,4 +55,22 @@ class UserRepository:
             'function': user[4]
         } for user in users
         ]
+    @staticmethod
+    def get_all_users():
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT email, name, username, role, function
+            FROM usermaster
+        """)
+        users = cur.fetchall()
+        cur.close()
+        return [{
+            'email': user[0],
+            'name': user[1],
+            'username': user[2],
+            'role': user[3],
+            'function': user[4]
+        } for user in users
+        ]
 
